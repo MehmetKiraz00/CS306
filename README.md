@@ -10,3 +10,5 @@ The aim of this project is to analyze the effects of immigration and terrorism o
 - Source #1: Immigration Data - This dataset includes the total number of people living in a given country that were born in another country. The link for the dataset is [here](https://ourworldindata.org/migration)
 - Source #2 : Terrorism Events – This dataset includes deaths per 100,000 people. Both deaths from conflicts within and between countries included in this dataset. The link for the dataset is [here](https://ourworldindata.org/war-and-peace#war-and-peace-after-1945) 
 - Source #3 : World Population – This dataset includes the world population in different countries in the years between 1990-2021. The link for the dataset is [here](https://ourworldindata.org/world-population-growth) 
+
+### ER MODEL CAN BE FOUND IN THE WIKI PAGE
