@@ -1,0 +1,897 @@
+[1, 04:31:49] CREATE DATABASE world_analysis: Running...
+[1, 04:31:49] CREATE DATABASE world_analysis: 1 row(s) affected
+[2, 04:31:49] USE world_analysis: Running...
+[2, 04:31:49] USE world_analysis: 0 row(s) affected
+[3, 04:31:49] CREATE TABLE Countries (
+    country_id INTEGER,
+    country_name VARCHAR(255) NOT NULL ,
+    PRIMARY KEY (country_id)
+): Running...
+[3, 04:31:49] CREATE TABLE Countries (
+    country_id INTEGER,
+    country_name VARCHAR(255) NOT NULL ,
+    PRIMARY KEY (country_id)
+): 0 row(s) affected
+[4, 04:31:49] CREATE TABLE Population (
+    sex_ratio REAL,
+    population_number INTEGER,
+    country_population_id INTEGER,
+    FOREIGN KEY (country_population_id) REFERENCES Countries(country_id),
+    PRIMARY KEY (id)
+): Running...
+[4, 04:31:49] CREATE TABLE Population (
+    sex_ratio REAL,
+    population_number INTEGER,
+    country_population_id INTEGER,
+    FOREIGN KEY (country_population_id) REFERENCES Countries(country_id),
+    PRIMARY KEY (id)
+): Error Code: 1072. Key column 'id' doesn't exist in table
+[5, 21:14:31] CREATE TABLE Population (
+    sex_ratio REAL,
+    population_number INTEGER,
+    country_population_id INTEGER,
+    FOREIGN KEY (country_population_id) REFERENCES Countries(country_id)
+): Running...
+[5, 21:14:31] CREATE TABLE Population (
+    sex_ratio REAL,
+    population_number INTEGER,
+    country_population_id INTEGER,
+    FOREIGN KEY (country_population_id) REFERENCES Countries(country_id)
+): 0 row(s) affected
+[6, 21:14:33] CREATE TABLE Economy (
+    country_economy_id INTEGER,
+    poverty REAL,
+    years INTEGER,
+    FOREIGN KEY (country_economy_id) REFERENCES Countries(country_id)
+): Running...
+[6, 21:14:34] CREATE TABLE Economy (
+    country_economy_id INTEGER,
+    poverty REAL,
+    years INTEGER,
+    FOREIGN KEY (country_economy_id) REFERENCES Countries(country_id)
+): 0 row(s) affected
+[7, 21:14:37] CREATE TABLE Terrorism (
+    years INTEGER,
+    death INTEGER,
+    immigrants_id INTEGER,
+    PRIMARY KEY (immigrants_id)
+): Running...
+[7, 21:14:37] CREATE TABLE Terrorism (
+    years INTEGER,
+    death INTEGER,
+    immigrants_id INTEGER,
+    PRIMARY KEY (immigrants_id)
+): 0 row(s) affected
+[8, 21:14:39] CREATE TABLE Immigrants (
+    years INTEGER,
+    Mig_Amount INTEGER,
+    origin VARCHAR(255),
+    country_immigrant_id INTEGER,
+    FOREIGN KEY (country_immigrant_id) REFERENCES Countries(country_id)
+): Running...
+[8, 21:14:39] CREATE TABLE Immigrants (
+    years INTEGER,
+    Mig_Amount INTEGER,
+    origin VARCHAR(255),
+    country_immigrant_id INTEGER,
+    FOREIGN KEY (country_immigrant_id) REFERENCES Countries(country_id)
+): 0 row(s) affected
+[9, 21:32:29] LOAD DATA INFILE 'D:/School/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[9, 21:32:29] LOAD DATA INFILE 'D:/School/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1290. The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+[10, 21:33:32] SHOW VARIABLES LIKE "secure_file_priv": Running...
+[10, 21:33:32] SHOW VARIABLES LIKE "secure_file_priv": Fetching...
+[10, 21:33:32] SHOW VARIABLES LIKE "secure_file_priv": 1 row(s) returned
+[11, 21:34:57] LOAD DATA INFILE 'C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[11, 21:34:57] LOAD DATA INFILE 'C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1290. The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+[12, 21:35:24] SHOW VARIABLES LIKE "secure_file_priv": Running...
+[12, 21:35:24] SHOW VARIABLES LIKE "secure_file_priv": Fetching...
+[12, 21:35:24] SHOW VARIABLES LIKE "secure_file_priv": 1 row(s) returned
+[13, 21:36:26] LOAD DATA LOCAL INFILE 'D:/School/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[13, 21:36:26] LOAD DATA LOCAL INFILE 'D:/School/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 3948. Loading local data is disabled; this must be enabled on both the client and server sides
+[14, 21:37:56] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[14, 21:37:56] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1366. Incorrect integer value: 'Afghanistan;AFG;1987;0' for column 'years' at row 1
+[15, 21:42:54] CREATE TABLE Terrorism (
+	terror_id INTEGER NOT NULL AUTO_INCREMENT,
+	terror_country_name VARCHAR(255) NOT NULL, 
+    terror_country_code VARCHAR(255) NOT NULL,
+    years INTEGER,
+    death INTEGER,
+    PRIMARY KEY (terror_id)
+): Running...
+[15, 21:42:54] CREATE TABLE Terrorism (
+	terror_id INTEGER NOT NULL AUTO_INCREMENT,
+	terror_country_name VARCHAR(255) NOT NULL, 
+    terror_country_code VARCHAR(255) NOT NULL,
+    years INTEGER,
+    death INTEGER,
+    PRIMARY KEY (terror_id)
+): Error Code: 1050. Table 'terrorism' already exists
+[16, 21:43:16] DROP TABLE Terrorism: Running...
+[16, 21:43:16] DROP TABLE Terrorism: 0 row(s) affected
+[17, 21:43:20] CREATE TABLE Terrorism (
+	terror_id INTEGER NOT NULL AUTO_INCREMENT,
+	terror_country_name VARCHAR(255) NOT NULL, 
+    terror_country_code VARCHAR(255) NOT NULL,
+    years INTEGER,
+    death INTEGER,
+    PRIMARY KEY (terror_id)
+): Running...
+[17, 21:43:20] CREATE TABLE Terrorism (
+	terror_id INTEGER NOT NULL AUTO_INCREMENT,
+	terror_country_name VARCHAR(255) NOT NULL, 
+    terror_country_code VARCHAR(255) NOT NULL,
+    years INTEGER,
+    death INTEGER,
+    PRIMARY KEY (terror_id)
+): 0 row(s) affected
+[18, 21:43:48] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[18, 21:43:48] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1366. Incorrect integer value: 'Afghanistan;AFG;1987;0' for column 'terror_id' at row 1
+[19, 21:46:53] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[19, 21:46:53] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1366. Incorrect integer value: 'Afghanistan;AFG;1987;0' for column 'terror_id' at row 1
+[20, 21:47:43] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[20, 21:47:43] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1265. Data truncated for column 'terror_id' at row 1
+[21, 21:49:47] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[21, 21:49:47] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1265. Data truncated for column 'terror_id' at row 1
+[22, 21:52:38] DROP TABLE Terrorism: Running...
+[22, 21:52:38] DROP TABLE Terrorism: 0 row(s) affected
+[23, 21:52:43] CREATE TABLE Terrorism (
+	terror_id INTEGER NOT NULL,
+	terror_country_name VARCHAR(255) NOT NULL, 
+    terror_country_code VARCHAR(255) NOT NULL,
+    years INTEGER,
+    death INTEGER,
+    PRIMARY KEY (terror_id)
+): Running...
+[23, 21:52:43] CREATE TABLE Terrorism (
+	terror_id INTEGER NOT NULL,
+	terror_country_name VARCHAR(255) NOT NULL, 
+    terror_country_code VARCHAR(255) NOT NULL,
+    years INTEGER,
+    death INTEGER,
+    PRIMARY KEY (terror_id)
+): 0 row(s) affected
+[24, 21:52:58] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[24, 21:52:58] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1265. Data truncated for column 'terror_id' at row 1
+[25, 21:55:30] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[25, 21:55:30] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fatalities-from-terrorism-new.csv' 
+INTO TABLE Terrorism 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: 446 row(s) affected
+Records: 446  Deleted: 0  Skipped: 0  Warnings: 0
+[26, 21:55:54] SELECT * FROM Terrorism
+LIMIT 0, 1000
+: Running...
+[26, 21:55:54] SELECT * FROM Terrorism
+LIMIT 0, 1000
+: Fetching...
+[26, 21:55:54] SELECT * FROM Terrorism
+LIMIT 0, 1000
+: 446 row(s) returned
+[27, 22:07:56] DROP TABLE Countries: Running...
+[27, 22:07:56] DROP TABLE Countries: Error Code: 3730. Cannot drop table 'countries' referenced by a foreign key constraint 'population_ibfk_1' on table 'population'.
+[28, 22:09:03] DROP TABLE Immigrants: Running...
+[28, 22:09:03] DROP TABLE Immigrants: 0 row(s) affected
+[29, 22:09:14] DROP TABLE Economy: Running...
+[29, 22:09:14] DROP TABLE Economy: 0 row(s) affected
+[30, 22:09:20] DROP TABLE Population: Running...
+[30, 22:09:20] DROP TABLE Population: 0 row(s) affected
+[31, 22:09:28] DROP TABLE Countries: Running...
+[31, 22:09:28] DROP TABLE Countries: 0 row(s) affected
+[32, 22:10:46] CREATE TABLE Countries (
+    country_id INTEGER AUTO_INCREMENT,
+    country_name VARCHAR(255) NOT NULL,
+    country_code VARCHAR(255) NOT NULL,
+    PRIMARY KEY (country_id)
+): Running...
+[32, 22:10:46] CREATE TABLE Countries (
+    country_id INTEGER AUTO_INCREMENT,
+    country_name VARCHAR(255) NOT NULL,
+    country_code VARCHAR(255) NOT NULL,
+    PRIMARY KEY (country_id)
+): 0 row(s) affected
+[33, 22:12:19] INSERT INTO Countries (country_name) SELECT DISTINCT terror_country_name FROM Terrorism: Running...
+[33, 22:12:19] INSERT INTO Countries (country_name) SELECT DISTINCT terror_country_name FROM Terrorism: Error Code: 1364. Field 'country_code' doesn't have a default value
+[34, 22:13:32] INSERT INTO Countries (country_name, country_code) SELECT DISTINCT terror_country_name, terror_country_code FROM Terrorism: Running...
+[34, 22:13:32] INSERT INTO Countries (country_name, country_code) SELECT DISTINCT terror_country_name, terror_country_code FROM Terrorism: 13 row(s) affected
+Records: 13  Duplicates: 0  Warnings: 0
+[35, 22:13:50] SELECT * FROM Countries
+LIMIT 0, 1000
+: Running...
+[35, 22:13:50] SELECT * FROM Countries
+LIMIT 0, 1000
+: Fetching...
+[35, 22:13:50] SELECT * FROM Countries
+LIMIT 0, 1000
+: 13 row(s) returned
+[36, 22:21:51] CREATE TABLE Population (
+    population_total INTEGER,
+    population_age_1 INTEGER,
+    population_age_1to4 INTEGER,
+    population_age_5to9 INTEGER,
+    population_age_10to14 INTEGER,
+    population_age_15to19 INTEGER,
+    population_age_20to29 INTEGER,
+    population_age_30to39 INTEGER,
+    population_age_40to49 INTEGER,
+    population_age_50to59 INTEGER,
+    population_age_60to69 INTEGER,
+    
+    FOREIGN KEY (country_population_id) REFERENCES Countries(country_id)
+): Running...
+[36, 22:21:51] CREATE TABLE Population (
+    population_total INTEGER,
+    population_age_1 INTEGER,
+    population_age_1to4 INTEGER,
+    population_age_5to9 INTEGER,
+    population_age_10to14 INTEGER,
+    population_age_15to19 INTEGER,
+    population_age_20to29 INTEGER,
+    population_age_30to39 INTEGER,
+    population_age_40to49 INTEGER,
+    population_age_50to59 INTEGER,
+    population_age_60to69 INTEGER,
+    
+    FOREIGN KEY (country_population_id) REFERENCES Countries(country_id)
+): Error Code: 1072. Key column 'country_population_id' doesn't exist in table
+[37, 22:35:11] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/world-data-all-new.csv' 
+INTO TABLE Population 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[37, 22:35:11] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/world-data-all-new.csv' 
+INTO TABLE Population 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1146. Table 'world_analysis.population' doesn't exist
+[38, 22:37:39] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/world-data-all-new.csv' 
+INTO TABLE Population 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[38, 22:37:39] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/world-data-all-new.csv' 
+INTO TABLE Population 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1146. Table 'world_analysis.population' doesn't exist
+[39, 22:38:28] CREATE TABLE Population (
+	country_population_name VARCHAR(255) NOT NULL PRIMARY KEY,
+    years INTEGER,
+    population_total INTEGER,
+    population_age_1 INTEGER,
+    population_age_1to4 INTEGER,
+    population_age_5to9 INTEGER,
+    population_age_10to14 INTEGER,
+    population_age_15to19 INTEGER,
+    population_age_20to29 INTEGER,
+    population_age_30to39 INTEGER,
+    population_age_40to49 INTEGER,
+    population_age_50to59 INTEGER,
+    population_age_60to69 INTEGER,
+    population_age_70to79 INTEGER,
+    population_age_80to89 INTEGER,
+    population_age_90to99 INTEGER,
+    population_age_over_100 INTEGER
+	
+): Running...
+[39, 22:38:28] CREATE TABLE Population (
+	country_population_name VARCHAR(255) NOT NULL PRIMARY KEY,
+    years INTEGER,
+    population_total INTEGER,
+    population_age_1 INTEGER,
+    population_age_1to4 INTEGER,
+    population_age_5to9 INTEGER,
+    population_age_10to14 INTEGER,
+    population_age_15to19 INTEGER,
+    population_age_20to29 INTEGER,
+    population_age_30to39 INTEGER,
+    population_age_40to49 INTEGER,
+    population_age_50to59 INTEGER,
+    population_age_60to69 INTEGER,
+    population_age_70to79 INTEGER,
+    population_age_80to89 INTEGER,
+    population_age_90to99 INTEGER,
+    population_age_over_100 INTEGER
+	
+): 0 row(s) affected
+[40, 22:38:41] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/world-data-all-new.csv' 
+INTO TABLE Population 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[40, 22:38:41] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/world-data-all-new.csv' 
+INTO TABLE Population 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1062. Duplicate entry 'Afghanistan' for key 'population.PRIMARY'
+[41, 22:39:47] DROP TABLE Population: Running...
+[41, 22:39:47] DROP TABLE Population: 0 row(s) affected
+[42, 22:40:16] CREATE TABLE Population (
+	country_population_id INTEGER NOT NULL PRIMARY KEY,
+	country_population_name VARCHAR(255) NOT NULL PRIMARY KEY,
+    years INTEGER,
+    population_total INTEGER,
+    population_age_1 INTEGER,
+    population_age_1to4 INTEGER,
+    population_age_5to9 INTEGER,
+    population_age_10to14 INTEGER,
+    population_age_15to19 INTEGER,
+    population_age_20to29 INTEGER,
+    population_age_30to39 INTEGER,
+    population_age_40to49 INTEGER,
+    population_age_50to59 INTEGER,
+    population_age_60to69 INTEGER,
+    population_age_70to79 INTEGER,
+    population_age_80to89 INTEGER,
+    population_age_90to99 INTEGER,
+    population_age_over_100 INTEGER
+	
+): Running...
+[42, 22:40:16] CREATE TABLE Population (
+	country_population_id INTEGER NOT NULL PRIMARY KEY,
+	country_population_name VARCHAR(255) NOT NULL PRIMARY KEY,
+    years INTEGER,
+    population_total INTEGER,
+    population_age_1 INTEGER,
+    population_age_1to4 INTEGER,
+    population_age_5to9 INTEGER,
+    population_age_10to14 INTEGER,
+    population_age_15to19 INTEGER,
+    population_age_20to29 INTEGER,
+    population_age_30to39 INTEGER,
+    population_age_40to49 INTEGER,
+    population_age_50to59 INTEGER,
+    population_age_60to69 INTEGER,
+    population_age_70to79 INTEGER,
+    population_age_80to89 INTEGER,
+    population_age_90to99 INTEGER,
+    population_age_over_100 INTEGER
+	
+): Error Code: 1068. Multiple primary key defined
+[43, 22:40:25] CREATE TABLE Population (
+	country_population_id INTEGER NOT NULL PRIMARY KEY,
+	country_population_name VARCHAR(255) NOT NULL,
+    years INTEGER,
+    population_total INTEGER,
+    population_age_1 INTEGER,
+    population_age_1to4 INTEGER,
+    population_age_5to9 INTEGER,
+    population_age_10to14 INTEGER,
+    population_age_15to19 INTEGER,
+    population_age_20to29 INTEGER,
+    population_age_30to39 INTEGER,
+    population_age_40to49 INTEGER,
+    population_age_50to59 INTEGER,
+    population_age_60to69 INTEGER,
+    population_age_70to79 INTEGER,
+    population_age_80to89 INTEGER,
+    population_age_90to99 INTEGER,
+    population_age_over_100 INTEGER
+	
+): Running...
+[43, 22:40:25] CREATE TABLE Population (
+	country_population_id INTEGER NOT NULL PRIMARY KEY,
+	country_population_name VARCHAR(255) NOT NULL,
+    years INTEGER,
+    population_total INTEGER,
+    population_age_1 INTEGER,
+    population_age_1to4 INTEGER,
+    population_age_5to9 INTEGER,
+    population_age_10to14 INTEGER,
+    population_age_15to19 INTEGER,
+    population_age_20to29 INTEGER,
+    population_age_30to39 INTEGER,
+    population_age_40to49 INTEGER,
+    population_age_50to59 INTEGER,
+    population_age_60to69 INTEGER,
+    population_age_70to79 INTEGER,
+    population_age_80to89 INTEGER,
+    population_age_90to99 INTEGER,
+    population_age_over_100 INTEGER
+	
+): 0 row(s) affected
+[44, 22:40:32] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/world-data-all-new.csv' 
+INTO TABLE Population 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[44, 22:40:32] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/world-data-all-new.csv' 
+INTO TABLE Population 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1265. Data truncated for column 'population_age_over_100' at row 96
+[45, 22:43:13] SELECT * FROM Countries
+LIMIT 0, 1000
+: Running...
+[45, 22:43:13] SELECT * FROM Countries
+LIMIT 0, 1000
+: Fetching...
+[45, 22:43:13] SELECT * FROM Countries
+LIMIT 0, 1000
+: 13 row(s) returned
+[46, 22:45:59] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/world-data-all-new.csv' 
+INTO TABLE Population 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[46, 22:45:59] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/world-data-all-new.csv' 
+INTO TABLE Population 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: 546 row(s) affected
+Records: 546  Deleted: 0  Skipped: 0  Warnings: 0
+[47, 22:46:38] SELECT * FROM Population
+LIMIT 0, 1000
+: Running...
+[47, 22:46:38] SELECT * FROM Population
+LIMIT 0, 1000
+: Fetching...
+[47, 22:46:38] SELECT * FROM Population
+LIMIT 0, 1000
+: 546 row(s) returned
+[48, 22:51:38] ALTER TABLE Population
+ADD country_population_code VARCHAR(255): Running...
+[48, 22:51:38] ALTER TABLE Population
+ADD country_population_code VARCHAR(255): 0 row(s) affected
+Records: 0  Duplicates: 0  Warnings: 0
+[49, 22:58:16] UPDATE Population
+SET country_population_code = (SELECT country_code FROM Countries WHERE Countries.country_name = Population.country_population_name): Running...
+[49, 22:58:16] UPDATE Population
+SET country_population_code = (SELECT country_code FROM Countries WHERE Countries.country_name = Population.country_population_name): Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column. 
+To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.
+[50, 22:59:28] UPDATE Population
+SET country_population_code = (SELECT country_code FROM Countries WHERE Countries.country_name = Population.country_population_name): Running...
+[50, 22:59:28] UPDATE Population
+SET country_population_code = (SELECT country_code FROM Countries WHERE Countries.country_name = Population.country_population_name): Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column. 
+To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.
+[51, 23:00:29] UPDATE Population
+SET country_population_code = (SELECT country_code FROM Countries WHERE Countries.country_name = Population.country_population_name): Running...
+[51, 23:00:29] UPDATE Population
+SET country_population_code = (SELECT country_code FROM Countries WHERE Countries.country_name = Population.country_population_name): 546 row(s) affected
+Rows matched: 546  Changed: 546  Warnings: 0
+[52, 23:00:37] SELECT * FROM Population
+LIMIT 0, 1000
+: Running...
+[52, 23:00:37] SELECT * FROM Population
+LIMIT 0, 1000
+: Fetching...
+[52, 23:00:37] SELECT * FROM Population
+LIMIT 0, 1000
+: 546 row(s) returned
+[53, 23:09:51] CREATE TABLE Migration (
+	migration_id INTEGER NOT NULL PRIMARY KEY,
+    years INTEGER,
+    country_migration_name VARCHAR(255) NOT NULL,
+    refugee_amount INTEGER,
+    net_migration INTEGER
+): Running...
+[53, 23:09:51] CREATE TABLE Migration (
+	migration_id INTEGER NOT NULL PRIMARY KEY,
+    years INTEGER,
+    country_migration_name VARCHAR(255) NOT NULL,
+    refugee_amount INTEGER,
+    net_migration INTEGER
+): 0 row(s) affected
+[54, 23:10:34] ALTER TABLE Migration
+ADD country_migration_code VARCHAR(255): Running...
+[54, 23:10:34] ALTER TABLE Migration
+ADD country_migration_code VARCHAR(255): 0 row(s) affected
+Records: 0  Duplicates: 0  Warnings: 0
+[55, 23:14:29] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[55, 23:14:29] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1366. Incorrect integer value: 'Afghanistan' for column 'years' at row 1
+[56, 23:15:00] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[56, 23:15:00] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1366. Incorrect integer value: '' for column 'refugee_amount' at row 1
+[57, 23:33:53] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,''),
+net_migration = NULLIF(@migration,''): Running...
+[57, 23:33:53] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,''),
+net_migration = NULLIF(@migration,''): Error Code: 1366. Incorrect integer value: '' for column 'net_migration' at row 2
+[58, 23:39:28] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,'' or '\N'),
+net_migration = NULLIF(@migration,'' or '\N'): Running...
+[58, 23:39:28] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,'' or '\N'),
+net_migration = NULLIF(@migration,'' or '\N'): Error Code: 1292. Truncated incorrect DOUBLE value: 'N'
+[59, 23:41:20] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[59, 23:41:20] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1261. Row 1 doesn't contain data for all columns
+[60, 23:44:43] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,'' ),
+net_migration = NULLIF(@migration,'' ): Running...
+[60, 23:44:43] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,'' ),
+net_migration = NULLIF(@migration,'' ): Error Code: 1366. Incorrect integer value: 'N' for column 'net_migration' at row 2
+[61, 23:45:21] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[61, 23:45:21] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1261. Row 1 doesn't contain data for all columns
+[62, 23:50:32] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,'\\N' ),
+net_migration = NULLIF(@migration,'\\N'): Running...
+[62, 23:50:32] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,'\\N' ),
+net_migration = NULLIF(@migration,'\\N'): Error Code: 1366. Incorrect integer value: 'N' for column 'net_migration' at row 2
+[63, 23:52:13] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,NULL ),
+net_migration = NULLIF(@migration,NULL): Running...
+[63, 23:52:13] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,NULL ),
+net_migration = NULLIF(@migration,NULL): Error Code: 1366. Incorrect integer value: 'N' for column 'net_migration' at row 2
+[64, 23:55:02] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,'N\A'),
+net_migration = NULLIF(@migration,'N\A'): Running...
+[64, 23:55:02] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,'N\A'),
+net_migration = NULLIF(@migration,'N\A'): Error Code: 1366. Incorrect integer value: 'NA' for column 'net_migration' at row 2
+[65, 23:56:58] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,'-'),
+net_migration = NULLIF(@migration,'-'): Running...
+[65, 23:56:58] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(migration_id, years, country_migration_name, @refugee, @migration)
+SET 
+refugee_amount = NULLIF(@refugee,'-'),
+net_migration = NULLIF(@migration,'-'): Error Code: 1366. Incorrect integer value: '-' for column 'net_migration' at row 2
+[66, 00:05:54] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[66, 00:05:54] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1261. Row 1 doesn't contain data for all columns
+[67, 00:08:41] ALTER TABLE Migration
+DROP country_migration_code: Running...
+[67, 00:08:41] ALTER TABLE Migration
+DROP country_migration_code: 0 row(s) affected
+Records: 0  Duplicates: 0  Warnings: 0
+[68, 00:08:47] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[68, 00:08:47] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/migration-data-new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: 533 row(s) affected
+Records: 533  Deleted: 0  Skipped: 0  Warnings: 0
+[69, 00:08:56] ALTER TABLE Migration
+ADD country_migration_code VARCHAR(255): Running...
+[69, 00:08:56] ALTER TABLE Migration
+ADD country_migration_code VARCHAR(255): 0 row(s) affected
+Records: 0  Duplicates: 0  Warnings: 0
+[70, 00:09:05] UPDATE Migration
+SET country_migration_code = (SELECT country_code FROM Countries WHERE Countries.country_name = Migration.country_population_name): Running...
+[70, 00:09:05] UPDATE Migration
+SET country_migration_code = (SELECT country_code FROM Countries WHERE Countries.country_name = Migration.country_population_name): Error Code: 1054. Unknown column 'Migration.country_population_name' in 'where clause'
+[71, 00:09:28] UPDATE Migration
+SET country_migration_code = (SELECT country_code FROM Countries WHERE Countries.country_name = Migration.country_migration_name): Running...
+[71, 00:09:28] UPDATE Migration
+SET country_migration_code = (SELECT country_code FROM Countries WHERE Countries.country_name = Migration.country_migration_name): 533 row(s) affected
+Rows matched: 533  Changed: 533  Warnings: 0
+[72, 00:09:41] SELECT * FROM Migration
+LIMIT 0, 1000
+: Running...
+[72, 00:09:41] SELECT * FROM Migration
+LIMIT 0, 1000
+: Fetching...
+[72, 00:09:41] SELECT * FROM Migration
+LIMIT 0, 1000
+: 533 row(s) returned
+[73, 00:23:38] CREATE TABLE Economy (
+    country_economy_id INTEGER,
+    country_economy_name VARCHAR(255) NOT NULL,
+    country_economy_code VARCHAR(255) NOT NULL,
+    years INTEGER,
+    share_of_pop_below_poverty REAL,
+    PRIMARY KEY (country_economy_id)
+): Running...
+[73, 00:23:38] CREATE TABLE Economy (
+    country_economy_id INTEGER,
+    country_economy_name VARCHAR(255) NOT NULL,
+    country_economy_code VARCHAR(255) NOT NULL,
+    years INTEGER,
+    share_of_pop_below_poverty REAL,
+    PRIMARY KEY (country_economy_id)
+): 0 row(s) affected
+[74, 00:24:02] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/poverty_new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[74, 00:24:02] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/poverty_new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1366. Incorrect integer value: 'China' for column 'migration_id' at row 1
+[75, 00:25:27] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/poverty_new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[75, 00:25:27] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/poverty_new.csv' 
+INTO TABLE Migration 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Error Code: 1366. Incorrect integer value: 'China' for column 'years' at row 1
+[76, 00:27:28] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/poverty_new.csv' 
+INTO TABLE Economy 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: Running...
+[76, 00:27:28] LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/poverty_new.csv' 
+INTO TABLE Economy 
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS: 200 row(s) affected
+Records: 200  Deleted: 0  Skipped: 0  Warnings: 0
+[77, 19:10:55] SET GLOBAL general_log = 'ON': Running...
+[77, 19:10:55] SET GLOBAL general_log = 'ON': 0 row(s) affected
+[78, 19:23:21] CREATE TABLE Test (
+	id INTEGER NOT NULL,
+	name VARCHAR(255) NOT NULL, 
+    code VARCHAR(255) NOT NULL,
+    years INTEGER,
+    death INTEGER,
+    PRIMARY KEY (id)
+): Running...
+[78, 19:23:21] CREATE TABLE Test (
+	id INTEGER NOT NULL,
+	name VARCHAR(255) NOT NULL, 
+    code VARCHAR(255) NOT NULL,
+    years INTEGER,
+    death INTEGER,
+    PRIMARY KEY (id)
+): 0 row(s) affected
