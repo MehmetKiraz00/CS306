@@ -11,6 +11,8 @@ CREATE TABLE Countries (
     PRIMARY KEY (country_id)
 );
 
+SELECT * FROM countries;
+
 -- Population Table
 CREATE TABLE Population (
 	country_population_id INTEGER NOT NULL PRIMARY KEY,
@@ -122,7 +124,7 @@ CREATE TABLE Military (
 
 DROP TABLE Military_4;
 
-SELECT * FROM Military_2;
+SELECT * FROM Military order by country_military_code;
 
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/armed-forces-personnel-new.csv' 
 INTO TABLE Military 
@@ -505,8 +507,170 @@ ORDER BY country_id;
 
 
 
+ALTER TABLE Migration
+ADD CONSTRAINT ck_refugee_amount_range
+CHECK (refugee_amount BETWEEN 0 AND 6608918);
+
+DELIMITER //
+CREATE TRIGGER tr_enforce_refugee_amount_range_before_insert
+BEFORE INSERT ON Migration
+FOR EACH ROW
+BEGIN
+IF NEW.refugee_amount < 0 THEN
+SET NEW.refugee_amount = 0;
+ELSEIF NEW.refugee_amount > 6608918 THEN
+SET NEW.refugee_amount = 6608918;
+END IF;
+END;
+//
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS tr_enforce_refugee_amount_range_before_insert;
+
+SELECT MIN(refugee_amount) AS min_refugee, MAX(refugee_amount) AS max_refugee
+FROM Migration;
+
+SELECT * FROM Migration;
+
+DELIMITER //
+CREATE TRIGGER tr_enforce_refugee_amount_range_before_update
+BEFORE UPDATE ON Migration
+FOR EACH ROW
+BEGIN
+IF NEW.refugee_amount < 0 THEN
+SET NEW.refugee_amount = 0;
+ELSEIF NEW.refugee_amount > 6608918 THEN
+SET NEW.refugee_amount = 6608918;
+END IF;
+END;
+//
+DELIMITER ;
+
+SELECT * FROM Migration;
+
+INSERT INTO Migration (migration_id, years, country_migration_name, refugee_amount, net_migration, country_migration_code)
+VALUES (534, 2023, 'Turkey', 7000000, 0, 'TUR');
 
 
+DELIMITER //
+CREATE PROCEDURE GetMilitaryDataByCountryCode(IN country_code VARCHAR(3))
+BEGIN
+    SELECT
+        md.country_military_name,
+        md.country_military_code,
+        md.years,
+        md.total_armed_personel
+    FROM
+        Military md
+    WHERE
+        md.country_military_code = country_code;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS GetMilitaryDataByCountryCode;
+
+-- Stored procedure for Afghanistan (AFG)
+CALL GetMilitaryDataByCountryCode('AFG');
+
+-- Stored procedure for another country, the United States (USA)
+CALL GetMilitaryDataByCountryCode('USA');
+
+SELECT * FROM poverty_militaryexpenditure;
+
+CREATE VIEW high_military_expenditure_countries AS
+SELECT
+    country_military_code
+FROM
+    military_details
+WHERE
+    military_expenditure_share_gdp >= 3;
+    
+CREATE VIEW low_military_expenditure_countries AS
+SELECT
+    country_code
+FROM
+    poverty_militaryexpenditure
+WHERE
+    military_expenditure_share_gdp < 1;
+    
+   
+SELECT
+    h.country_military_code
+FROM
+    high_military_expenditure_countries h
+LEFT JOIN
+    low_military_expenditure_countries l ON h.country_military_code = l.country_code
+WHERE
+    l.country_code IS NULL;    
+    
+SELECT
+    country_military_code
+FROM
+    high_military_expenditure_countries
+WHERE
+    country_military_code NOT IN (
+        SELECT
+            country_code
+        FROM
+            low_military_expenditure_countries
+    );    
+    
+SELECT *
+FROM Terrorism_Happiness
+WHERE country_name IN (
+    SELECT country_happiness_name
+    FROM happiness
+    WHERE happiness_rate_out_of_10 >= 7.0
+);    
+    
+SELECT *
+FROM Terrorism_Happiness t
+WHERE EXISTS (
+    SELECT 1
+    FROM happiness h
+    WHERE h.country_happiness_name = t.country_name
+    AND h.happiness_rate_out_of_10 >= 7.0
+);    
+
+SELECT * FROM military_details;
+
+SELECT country_military_name,
+       COUNT(years) as number_of_years,
+       AVG(total_armed_personel) as average_personel,
+       SUM(military_expenditure) as total_expenditure,
+       MIN(armed_personel_share_pop) as min_personel_share_pop,
+       MAX(military_expenditure_share_gdp) as max_expenditure_share_gdp
+FROM military_details
+GROUP BY country_military_name
+HAVING COUNT(years) >= 2 AND MAX(military_expenditure_share_gdp) >= 1;
+
+SELECT country_military_name,
+       COUNT(years) as number_of_years,
+       AVG(total_armed_personel) as average_personel,
+       SUM(military_expenditure) as total_expenditure,
+       MIN(armed_personel_share_labor) as min_personel_share_labor,
+       MAX(military_expenditure_share_gdp) as max_expenditure_share_gdp
+FROM military_details
+GROUP BY country_military_name
+HAVING MIN(armed_personel_share_labor) >= 1 AND SUM(military_expenditure) >= 100000000;
+
+SELECT country_military_name,
+       COUNT(years) as number_of_years,
+       AVG(armed_personel_share_labor) as average_personel_share_labor,
+       SUM(military_expenditure) as total_expenditure,
+       MIN(armed_personel_share_pop) as min_personel_share_pop,
+       MAX(total_armed_personel) as max_personel
+FROM military_details
+GROUP BY country_military_name
+HAVING AVG(armed_personel_share_labor) >= 1 AND MIN(armed_personel_share_pop) <= 0.5;
 
 
-
+SELECT country_military_name,
+       COUNT(years) as number_of_years,
+       AVG(armed_personel_share_labor) as average_personel_share_labor,
+       SUM(military_expenditure) as total_expenditure,
+       MIN(total_armed_personel) as min_personel,
+       MAX(military_expenditure_share_gdp) as max_expenditure_share_gdp
+FROM military_details
+GROUP BY country_military_name
+HAVING MAX(military_expenditure_share_gdp) >= 2 AND COUNT(years) <= 50;
